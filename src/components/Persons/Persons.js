@@ -1,17 +1,22 @@
 import React from 'react'
-import ErrorBoundery from '../../ErrorBoundery/ErrorBoundery'
+import ErrorBoundary from '../../ErrorBoundary/ErrorBoundary'
 import Person from './Person/Person'
 
-const persons = (props) =>
+const persons = (props) => {
+  const rnd = Math.random()
+  if (rnd > 0.7) {
+    throw new Error('Something went wrong')
+  }
   props.persons.map((person, index) =>
-    <ErrorBoundery key = {person.id}>
+    <ErrorBoundary key = {person.id}>
       <Person
+        key = {person.id}
         name = {person.name}
         age = {person.age}
         changed = {(event) => props.changed(event, person.id)}
         clicked = { () => props.clicked(index)}
       />
-    </ErrorBoundery>
+    </ErrorBoundary>
   )
-
+}
 export default persons
